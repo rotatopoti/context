@@ -1,24 +1,28 @@
-import logo from './logo.svg';
+import { useState } from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import List from "./List";
+import Detail from "./Detail";
+import { ItemContext } from "./ItemContext";
+
 import './App.css';
 
 function App() {
+
+  // Placeholder for list data
+  const [data, setData] = useState([
+    { id: "24", title: "Go to the store" },
+    { id: "25", title: "Item 2" },
+    { id: "26", title: "Item 3" },
+    { id: "27", title: "Item 4" }
+  ]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router className="App">
+      <ItemContext.Provider value={{data, setData}}>
+        <Route exact path="/" component={List} />
+        <Route path="/:id" component={Detail} />
+      </ItemContext.Provider>
+    </Router>
   );
 }
 
